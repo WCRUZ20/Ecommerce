@@ -35,6 +35,10 @@ builder.Services.AddScoped<
     ICommandHandler<CreateDealerCommand, Result<DealerDto>>,
     CreateDealerHandler>();
 
+builder.Services.AddScoped<
+    ICommandHandler<AddDealerAddressCommand, Result<DealerAddressDto>>,
+    AddDealerAddressHandler>();
+
 var jwtSecretKey = builder.Configuration["Jwt:SecretKey"];
 
 if (string.IsNullOrWhiteSpace(jwtSecretKey))
