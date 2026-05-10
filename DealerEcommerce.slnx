@@ -1,0 +1,8 @@
+<Solution>
+  <Project Path="DealerEcommerce.Api/DealerEcommerce.Api.csproj" />
+  <Project Path="DealerEcommerce.Application/DealerEcommerce.Application.csproj" />
+  <Project Path="DealerEcommerce.Domain/DealerEcommerce.Domain.csproj" />
+  <Project Path="DealerEcommerce.Infrastructure/DealerEcommerce.Infrastructure.csproj" />
+  <Project Path="DealerEcommerce.Integrations/DealerEcommerce.Integrations.csproj" />
+  <Project Path="DealerEcommerce.Shared/DealerEcommerce.Shared.csproj" />
+</Solution>

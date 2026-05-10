@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\DealerEcommerce.Application\DealerEcommerce.Application.csproj" />
+    <ProjectReference Include="..\DealerEcommerce.Domain\DealerEcommerce.Domain.csproj" />
+    <ProjectReference Include="..\DealerEcommerce.Shared\DealerEcommerce.Shared.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+</Project>
