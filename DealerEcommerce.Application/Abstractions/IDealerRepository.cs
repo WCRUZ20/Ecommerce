@@ -1,4 +1,5 @@
-﻿using DealerEcommerce.Domain.Dealers;
+﻿using DealerEcommerce.Domain.Addresses;
+using DealerEcommerce.Domain.Dealers;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -13,6 +14,15 @@ namespace DealerEcommerce.Application.Abstractions
 
         Task<Dealer?> GetByDocumentNumberAsync(
             string documentNumber,
+            CancellationToken cancellationToken = default);
+
+        Task<bool> ExistsAsync(
+            Guid dealerId,
+            CancellationToken cancellationToken = default);
+
+        Task AddAddressAsync(
+            DealerAddress address,
+            bool setAsDefault,
             CancellationToken cancellationToken = default);
 
         Task AddAsync(

@@ -37,19 +37,13 @@ namespace DealerEcommerce.Application.Dealers.Handlers
             if (string.IsNullOrWhiteSpace(command.MainStreet))
                 return Result<DealerAddressDto>.Failure("La calle principal es obligatoria para crear una dirección.");
 
-            var dealer = await _dealerRepository.GetByIdAsync(command.DealerId, cancellationToken);
+            var dealerExists = await _dealerRepository.ExistsAsync(command.DealerId, cancellationToken);
 
-            if (dealer == null)
+            if (!dealerExists)
                 return Result<DealerAddressDto>.Failure("No existe el dealer indicado.");
-
-            if (command.IsDefault)
-            {
-                foreach (var existingAddress in dealer.Addresses)
-                    existingAddress.RemoveDefault();
-            }
-
+                        
             var address = new DealerAddress(
-                dealer.Id,
+                command.DealerId,
                 command.AddressType,
                 command.Province,
                 command.City,
@@ -58,8 +52,7 @@ namespace DealerEcommerce.Application.Dealers.Handlers
                 command.Reference,
                 command.IsDefault);
 
-            dealer.AddAddress(address);
-            await _dealerRepository.UpdateAsync(dealer, cancellationToken);
+            await _dealerRepository.AddAddressAsync(address, command.IsDefault, cancellationToken);
 
             var dto = new DealerAddressDto
             {
