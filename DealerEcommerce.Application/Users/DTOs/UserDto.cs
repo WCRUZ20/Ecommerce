@@ -2,13 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DealerEcommerce.Application.Auth.DTOs
+namespace DealerEcommerce.Application.Users.DTOs
 {
-    public class LoginResponseDto
+    public class UserDto
     {
-        public string Token { get; set; } = string.Empty;
-
-        public Guid UserId { get; set; }
+        public Guid Id { get; set; }
 
         public Guid? DealerId { get; set; }
 

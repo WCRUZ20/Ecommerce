@@ -6,7 +6,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Dealers\Queries\" />
+    <Folder Include="Users\Queries\" />
   </ItemGroup>
 
   <PropertyGroup>

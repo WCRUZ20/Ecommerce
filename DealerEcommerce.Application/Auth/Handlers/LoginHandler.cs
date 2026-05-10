@@ -57,7 +57,8 @@ namespace DealerEcommerce.Application.Auth.Handlers
                 DealerId = user.DealerId,
                 Username = user.Username,
                 Email = user.Email,
-                Role = user.Role
+                Role = ((int)user.Role).ToString(),
+                DealerType = ((int)user.DealerType).ToString()
             };
 
             return Result<LoginResponseDto>.Success(response, "Login correcto.");

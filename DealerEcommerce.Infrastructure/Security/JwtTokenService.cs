@@ -34,14 +34,15 @@ namespace DealerEcommerce.Infrastructure.Security
                 SecurityAlgorithms.HmacSha256);
 
             var claims = new List<Claim>
-        {
-            new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
-            new Claim("userId", user.Id.ToString()),
-            new Claim("dealerId", user.DealerId.ToString()),
-            new Claim("username", user.Username),
-            new Claim(ClaimTypes.Email, user.Email),
-            new Claim(ClaimTypes.Role, user.Role)
-        };
+            {
+                new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
+                new Claim("userId", user.Id.ToString()),
+                new Claim("dealerId", user.DealerId?.ToString() ?? string.Empty),
+                new Claim("username", user.Username),
+                new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.Role, ((int)user.Role).ToString()),
+                new Claim("dealerType", ((int)user.DealerType).ToString())
+            };
 
             var expiresMinutes = Convert.ToDouble(
                 _configuration["Jwt:ExpiresMinutes"] ?? "120");

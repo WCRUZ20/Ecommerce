@@ -2,6 +2,7 @@
 using DealerEcommerce.Domain.Common;
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using System.Text;
 
 namespace DealerEcommerce.Domain.Dealers
@@ -10,13 +11,14 @@ namespace DealerEcommerce.Domain.Dealers
     {
         public DealerType DealerType { get; private set; }
 
-        public string FirstName { get; private set; } = string.Empty;
+        //public string FirstName { get; private set; } = string.Empty;
 
-        public string? SecondName { get; private set; }
+        //public string? SecondName { get; private set; }
 
-        public string LastName { get; private set; } = string.Empty;
+        //public string LastName { get; private set; } = string.Empty;
 
-        public string? SecondLastName { get; private set; }
+        //public string? SecondLastName { get; private set; }
+        public string razonSocial { get; private set; }
 
         public string? BusinessName { get; private set; }
 
@@ -34,20 +36,22 @@ namespace DealerEcommerce.Domain.Dealers
 
         public Dealer(
             DealerType dealerType,
-            string firstName,
-            string? secondName,
-            string lastName,
-            string? secondLastName,
+            //string firstName,
+            //string? secondName,
+            //string lastName,
+            //string? secondLastName,
+            string razonsocial,
             string? businessName,
             string email,
             DocumentType documentType,
             string documentNumber)
         {
             DealerType = dealerType;
-            FirstName = firstName;
-            SecondName = secondName;
-            LastName = lastName;
-            SecondLastName = secondLastName;
+            //FirstName = firstName;
+            //SecondName = secondName;
+            //LastName = lastName;
+            //SecondLastName = secondLastName;
+            razonSocial = razonsocial;
             BusinessName = businessName;
             Email = email;
             DocumentType = documentType;
@@ -55,17 +59,19 @@ namespace DealerEcommerce.Domain.Dealers
         }
 
         public void UpdateProfile(
-            string firstName,
-            string? secondName,
-            string lastName,
-            string? secondLastName,
+            //string firstName,
+            //string? secondName,
+            //string lastName,
+            //string? secondLastName,
+            string? razonsocial,
             string? businessName,
             string email)
         {
-            FirstName = firstName;
-            SecondName = secondName;
-            LastName = lastName;
-            SecondLastName = secondLastName;
+            //FirstName = firstName;
+            //SecondName = secondName;
+            //LastName = lastName;
+            //SecondLastName = secondLastName;
+            razonSocial = razonsocial;
             BusinessName = businessName;
             Email = email;
 

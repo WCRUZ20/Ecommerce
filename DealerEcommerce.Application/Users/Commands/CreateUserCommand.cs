@@ -1,13 +1,16 @@
 ﻿using DealerEcommerce.Domain.Dealers;
+using DealerEcommerce.Domain.Users;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace DealerEcommerce.Application.Dealers.Commands
+namespace DealerEcommerce.Application.Users.Commands
 {
-    public class CreateDealerCommand
+    public class CreateUserCommand
     {
-        public DealerType DealerType { get; set; }
+        public UserRole Role { get; set; }
+
+        public UserDealerType DealerType { get; set; } = UserDealerType.NoAplica;
 
         public string FirstName { get; set; } = string.Empty;
 
@@ -17,13 +20,15 @@ namespace DealerEcommerce.Application.Dealers.Commands
 
         public string? SecondLastName { get; set; }
 
+        public string? razonSocial { get; set; }
+
         public string? BusinessName { get; set; }
 
         public string Email { get; set; } = string.Empty;
 
         public DocumentType DocumentType { get; set; }
 
-        public string DocumentNumber { get; set; } = string.Empty;
+        public string? DocumentNumber { get; set; }
 
         public string Username { get; set; } = string.Empty;
 

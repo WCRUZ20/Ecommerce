@@ -7,6 +7,7 @@ using DealerEcommerce.Domain.Users;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 
 namespace DealerEcommerce.Infrastructure.Persistence
@@ -53,6 +54,20 @@ namespace DealerEcommerce.Infrastructure.Persistence
                     .HasMaxLength(100)
                     .IsRequired();
 
+                entity.Property(x => x.FirstName)
+                    .HasMaxLength(100)
+                    .IsRequired();
+
+                entity.Property(x => x.SecondName)
+                    .HasMaxLength(100);
+
+                entity.Property(x => x.LastName)
+                    .HasMaxLength(100)
+                    .IsRequired();
+
+                entity.Property(x => x.SecondLastName)
+                    .HasMaxLength(100);
+
                 entity.Property(x => x.Email)
                     .HasMaxLength(150)
                     .IsRequired();
@@ -62,6 +77,17 @@ namespace DealerEcommerce.Infrastructure.Persistence
                     .IsRequired();
 
                 entity.Property(x => x.Role)
+                .HasConversion(
+                        value => ((int)value).ToString(CultureInfo.InvariantCulture),
+                        value => (UserRole)int.Parse(value, CultureInfo.InvariantCulture))
+                    .HasMaxLength(50)
+                    .IsRequired();
+
+                entity.Property(x => x.DealerType)
+                    //.HasColumnName("dealerType")
+                    .HasConversion(
+                        value => ((int)value).ToString(CultureInfo.InvariantCulture),
+                        value => (UserDealerType)int.Parse(value, CultureInfo.InvariantCulture))
                     .HasMaxLength(50)
                     .IsRequired();
 
@@ -78,19 +104,19 @@ namespace DealerEcommerce.Infrastructure.Persistence
 
                 entity.HasKey(x => x.Id);
 
-                entity.Property(x => x.FirstName)
-                    .HasMaxLength(100)
-                    .IsRequired();
+                //entity.Property(x => x.FirstName)
+                //    .HasMaxLength(100)
+                //    .IsRequired();
 
-                entity.Property(x => x.SecondName)
-                    .HasMaxLength(100);
+                //entity.Property(x => x.SecondName)
+                //    .HasMaxLength(100);
 
-                entity.Property(x => x.LastName)
-                    .HasMaxLength(100)
-                    .IsRequired();
+                //entity.Property(x => x.LastName)
+                //    .HasMaxLength(100)
+                //    .IsRequired();
 
-                entity.Property(x => x.SecondLastName)
-                    .HasMaxLength(100);
+                //entity.Property(x => x.SecondLastName)
+                //    .HasMaxLength(100);
 
                 entity.Property(x => x.BusinessName)
                     .HasMaxLength(200);

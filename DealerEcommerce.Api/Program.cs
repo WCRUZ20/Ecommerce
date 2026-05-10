@@ -7,9 +7,9 @@ using DealerEcommerce.Application.Auth.Commands;
 using DealerEcommerce.Application.Auth.DTOs;
 using DealerEcommerce.Application.Auth.Handlers;
 using DealerEcommerce.Application.Common;
-using DealerEcommerce.Application.Dealers.Commands;
-using DealerEcommerce.Application.Dealers.DTOs;
-using DealerEcommerce.Application.Dealers.Handlers;
+using DealerEcommerce.Application.Users.Commands;
+using DealerEcommerce.Application.Users.DTOs;
+using DealerEcommerce.Application.Users.Handlers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,8 +25,8 @@ builder.Services.AddScoped<
     LoginHandler>();
 
 builder.Services.AddScoped<
-    ICommandHandler<CreateDealerCommand, Result<DealerDto>>,
-    CreateDealerHandler>();
+    ICommandHandler<CreateUserCommand, Result<UserDto>>,
+    CreateUserHandler>();
 
 var jwtSecretKey = builder.Configuration["Jwt:SecretKey"];
 
