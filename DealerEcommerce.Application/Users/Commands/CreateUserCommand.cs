@@ -20,15 +20,7 @@ namespace DealerEcommerce.Application.Users.Commands
 
         public string? SecondLastName { get; set; }
 
-        public string? razonSocial { get; set; }
-
-        public string? BusinessName { get; set; }
-
         public string Email { get; set; } = string.Empty;
-
-        public DocumentType DocumentType { get; set; }
-
-        public string? DocumentNumber { get; set; }
 
         public string Username { get; set; } = string.Empty;
 

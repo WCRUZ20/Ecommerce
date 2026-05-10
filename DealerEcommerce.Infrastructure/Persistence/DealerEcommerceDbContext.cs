@@ -118,6 +118,10 @@ namespace DealerEcommerce.Infrastructure.Persistence
                 //entity.Property(x => x.SecondLastName)
                 //    .HasMaxLength(100);
 
+                entity.Property(x => x.RazonSocial)
+                    .HasColumnName("razonSocial")
+                    .HasMaxLength(200);
+
                 entity.Property(x => x.BusinessName)
                     .HasMaxLength(200);
 

@@ -37,9 +37,9 @@ namespace DealerEcommerce.Domain.Users
             string email,
             string passwordHash,
             string firstname,
-            string secondname,
+            string? secondname,
             string lastName,
-            string secondlastname,
+            string? secondlastname,
             UserRole role,
             UserDealerType dealerType)
         {
@@ -54,6 +54,12 @@ namespace DealerEcommerce.Domain.Users
             Role = role;
             DealerType = dealerType;
             MustChangePassword = false;
+        }
+
+        public void AssignDealer(Guid dealerId)
+        {
+            DealerId = dealerId;
+            MarkAsUpdated();
         }
 
         public void ChangePassword(string passwordHash)

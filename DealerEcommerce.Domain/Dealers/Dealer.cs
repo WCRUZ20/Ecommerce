@@ -1,9 +1,6 @@
 ﻿using DealerEcommerce.Domain.Addresses;
 using DealerEcommerce.Domain.Common;
 using System;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using System.Text;
 
 namespace DealerEcommerce.Domain.Dealers
 {
@@ -18,7 +15,7 @@ namespace DealerEcommerce.Domain.Dealers
         //public string LastName { get; private set; } = string.Empty;
 
         //public string? SecondLastName { get; private set; }
-        public string razonSocial { get; private set; }
+        public string? RazonSocial { get; private set; }
 
         public string? BusinessName { get; private set; }
 
@@ -40,7 +37,7 @@ namespace DealerEcommerce.Domain.Dealers
             //string? secondName,
             //string lastName,
             //string? secondLastName,
-            string razonsocial,
+            string? razonSocial,
             string? businessName,
             string email,
             DocumentType documentType,
@@ -51,7 +48,7 @@ namespace DealerEcommerce.Domain.Dealers
             //SecondName = secondName;
             //LastName = lastName;
             //SecondLastName = secondLastName;
-            razonSocial = razonsocial;
+            RazonSocial = razonSocial;
             BusinessName = businessName;
             Email = email;
             DocumentType = documentType;
@@ -63,7 +60,7 @@ namespace DealerEcommerce.Domain.Dealers
             //string? secondName,
             //string lastName,
             //string? secondLastName,
-            string? razonsocial,
+            string? razonSocial,
             string? businessName,
             string email)
         {
@@ -71,7 +68,7 @@ namespace DealerEcommerce.Domain.Dealers
             //SecondName = secondName;
             //LastName = lastName;
             //SecondLastName = secondLastName;
-            razonSocial = razonsocial;
+            RazonSocial = razonSocial;
             BusinessName = businessName;
             Email = email;
 
