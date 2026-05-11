@@ -35,6 +35,42 @@ namespace DealerEcommerce.Infrastructure.Repositories
                 .FirstOrDefaultAsync(x => x.DocumentNumber == documentNumber, cancellationToken);
         }
 
+        public async Task<IReadOnlyCollection<Dealer>> GetAllAsync(
+            CancellationToken cancellationToken = default)
+        {
+            return await _context.Dealers
+                .Include(x => x.Addresses)
+                .AsNoTracking()
+                .ToListAsync(cancellationToken);
+        }
+
+        public async Task<DealerAddress?> GetAddressByIdAsync(
+            Guid addressId,
+            CancellationToken cancellationToken = default)
+        {
+            return await _context.DealerAddresses
+                .AsNoTracking()
+                .FirstOrDefaultAsync(x => x.Id == addressId, cancellationToken);
+        }
+
+        public async Task<IReadOnlyCollection<DealerAddress>> GetAddressesAsync(
+            CancellationToken cancellationToken = default)
+        {
+            return await _context.DealerAddresses
+                .AsNoTracking()
+                .ToListAsync(cancellationToken);
+        }
+
+        public async Task<IReadOnlyCollection<DealerAddress>> GetAddressesByDealerIdAsync(
+            Guid dealerId,
+            CancellationToken cancellationToken = default)
+        {
+            return await _context.DealerAddresses
+                .AsNoTracking()
+                .Where(x => x.DealerId == dealerId)
+                .ToListAsync(cancellationToken);
+        }
+
         public async Task<bool> ExistsAsync(
             Guid dealerId,
             CancellationToken cancellationToken = default)

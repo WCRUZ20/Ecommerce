@@ -16,6 +16,20 @@ namespace DealerEcommerce.Application.Abstractions
             string documentNumber,
             CancellationToken cancellationToken = default);
 
+        Task<IReadOnlyCollection<Dealer>> GetAllAsync(
+            CancellationToken cancellationToken = default);
+
+        Task<DealerAddress?> GetAddressByIdAsync(
+            Guid addressId,
+            CancellationToken cancellationToken = default);
+
+        Task<IReadOnlyCollection<DealerAddress>> GetAddressesAsync(
+            CancellationToken cancellationToken = default);
+
+        Task<IReadOnlyCollection<DealerAddress>> GetAddressesByDealerIdAsync(
+            Guid dealerId,
+            CancellationToken cancellationToken = default);
+
         Task<bool> ExistsAsync(
             Guid dealerId,
             CancellationToken cancellationToken = default);

@@ -36,6 +36,22 @@ namespace DealerEcommerce.Infrastructure.Repositories
                 .FirstOrDefaultAsync(x => x.Id == userId, cancellationToken);
         }
 
+        public async Task<User?> GetByDealerIdAsync(
+            Guid dealerId,
+            CancellationToken cancellationToken = default)
+        {
+            return await _context.Users
+                .FirstOrDefaultAsync(x => x.DealerId == dealerId, cancellationToken);
+        }
+
+        public async Task<IReadOnlyCollection<User>> GetAllAsync(
+            CancellationToken cancellationToken = default)
+        {
+            return await _context.Users
+                .AsNoTracking()
+                .ToListAsync(cancellationToken);
+        }
+
         public async Task AddAsync(
             User user,
             CancellationToken cancellationToken = default)

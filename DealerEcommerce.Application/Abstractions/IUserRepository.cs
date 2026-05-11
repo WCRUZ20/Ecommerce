@@ -15,6 +15,13 @@ namespace DealerEcommerce.Application.Abstractions
             Guid userId,
             CancellationToken cancellationToken = default);
 
+        Task<User?> GetByDealerIdAsync(
+            Guid dealerId,
+            CancellationToken cancellationToken = default);
+
+        Task<IReadOnlyCollection<User>> GetAllAsync(
+            CancellationToken cancellationToken = default);
+
         Task AddAsync(
             User user,
             CancellationToken cancellationToken = default);
