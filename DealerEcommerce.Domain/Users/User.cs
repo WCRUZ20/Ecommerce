@@ -62,6 +62,30 @@ namespace DealerEcommerce.Domain.Users
             MarkAsUpdated();
         }
 
+        public void UpdateProfile(
+            Guid? dealerId,
+            string username,
+            string email,
+            string firstName,
+            string? secondName,
+            string lastName,
+            string? secondLastName,
+            UserRole role,
+            UserDealerType dealerType)
+        {
+            DealerId = dealerId;
+            Username = username;
+            Email = email;
+            FirstName = firstName;
+            SecondName = secondName;
+            LastName = lastName;
+            SecondLastName = secondLastName;
+            Role = role;
+            DealerType = dealerType;
+
+            MarkAsUpdated();
+        }
+
         public void ChangePassword(string passwordHash)
         {
             PasswordHash = passwordHash;

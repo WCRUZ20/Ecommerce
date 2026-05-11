@@ -60,17 +60,23 @@ namespace DealerEcommerce.Domain.Dealers
             //string? secondName,
             //string lastName,
             //string? secondLastName,
+            DealerType dealerType,
             string? razonSocial,
             string? businessName,
-            string email)
+            string email,
+            DocumentType documentType,
+            string documentNumber)
         {
             //FirstName = firstName;
             //SecondName = secondName;
             //LastName = lastName;
             //SecondLastName = secondLastName;
+            DealerType = dealerType;
             RazonSocial = razonSocial;
             BusinessName = businessName;
             Email = email;
+            DocumentType = documentType;
+            DocumentNumber = documentNumber;
 
             MarkAsUpdated();
         }

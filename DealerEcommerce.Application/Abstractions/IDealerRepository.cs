@@ -39,6 +39,11 @@ namespace DealerEcommerce.Application.Abstractions
             bool setAsDefault,
             CancellationToken cancellationToken = default);
 
+        Task UpdateAddressAsync(
+            DealerAddress address,
+            bool setAsDefault,
+            CancellationToken cancellationToken = default);
+
         Task AddAsync(
             Dealer dealer,
             CancellationToken cancellationToken = default);

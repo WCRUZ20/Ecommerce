@@ -16,18 +16,24 @@ namespace DealerEcommerce.Api.Controllers
     public class DealersController : ControllerBase
     {
         private readonly ICommandHandler<CreateDealerCommand, Result<DealerDto>> _createDealerHandler;
+        private readonly ICommandHandler<UpdateDealerCommand, Result<DealerDto>> _updateDealerHandler;
         private readonly ICommandHandler<AddDealerAddressCommand, Result<DealerAddressDto>> _addDealerAddressHandler;
+        private readonly ICommandHandler<UpdateDealerAddressCommand, Result<DealerAddressDto>> _updateDealerAddressHandler;
         private readonly IDealerRepository _dealerRepository;
         private readonly IUserRepository _userRepository;
 
         public DealersController(
             ICommandHandler<CreateDealerCommand, Result<DealerDto>> createDealerHandler,
+            ICommandHandler<UpdateDealerCommand, Result<DealerDto>> updateDealerHandler,
             ICommandHandler<AddDealerAddressCommand, Result<DealerAddressDto>> addDealerAddressHandler,
+            ICommandHandler<UpdateDealerAddressCommand, Result<DealerAddressDto>> updateDealerAddressHandler,
             IDealerRepository dealerRepository,
             IUserRepository userRepository)
         {
             _createDealerHandler = createDealerHandler;
+            _updateDealerHandler = updateDealerHandler;
             _addDealerAddressHandler = addDealerAddressHandler;
+            _updateDealerAddressHandler = updateDealerAddressHandler;
             _dealerRepository = dealerRepository;
             _userRepository = userRepository;
         }
@@ -140,6 +146,65 @@ namespace DealerEcommerce.Api.Controllers
             return Ok(Result<IReadOnlyCollection<DealerAddressDto>>.Success(
                 addresses.Select(MapToDto).ToList(),
                 "Direcciones del dealer obtenidas correctamente."));
+        }
+
+        [HttpPut("{dealerId:guid}")]
+        public async Task<IActionResult> Update(
+            Guid dealerId,
+            [FromBody] UpdateDealerCommand command,
+            CancellationToken cancellationToken)
+        {
+            if (!IsAdminOrDev() && GetCurrentDealerId() != dealerId)
+                return Forbid();
+
+            var dealer = await _dealerRepository.GetByIdAsync(dealerId, cancellationToken);
+
+            if (dealer == null)
+                return NotFound(Result<DealerDto>.Failure("No existe el dealer indicado."));
+
+            command.DealerId = dealerId;
+
+            var result = await _updateDealerHandler.HandleAsync(command, cancellationToken);
+
+            if (!result.IsSuccess)
+                return BadRequest(result);
+
+            return Ok(result);
+        }
+
+        [HttpPut("addresses/{addressId:guid}")]
+        public async Task<IActionResult> UpdateAddress(
+            Guid addressId,
+            [FromBody] UpdateDealerAddressCommand command,
+            CancellationToken cancellationToken)
+        {
+            var address = await _dealerRepository.GetAddressByIdAsync(addressId, cancellationToken);
+
+            if (address == null)
+                return NotFound(Result<DealerAddressDto>.Failure("No existe la dirección indicada."));
+
+            if (!IsAdminOrDev())
+            {
+                var currentDealerId = GetCurrentDealerId();
+
+                if (currentDealerId != address.DealerId)
+                    return Forbid();
+
+                command.DealerId = currentDealerId.Value;
+            }
+            else if (command.DealerId == Guid.Empty)
+            {
+                command.DealerId = address.DealerId;
+            }
+
+            command.AddressId = addressId;
+
+            var result = await _updateDealerAddressHandler.HandleAsync(command, cancellationToken);
+
+            if (!result.IsSuccess)
+                return BadRequest(result);
+
+            return Ok(result);
         }
 
         [HttpPost]

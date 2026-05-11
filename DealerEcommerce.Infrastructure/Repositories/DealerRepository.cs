@@ -100,6 +100,31 @@ namespace DealerEcommerce.Infrastructure.Repositories
             await _context.SaveChangesAsync(cancellationToken);
         }
 
+
+        public async Task UpdateAddressAsync(
+            DealerAddress address,
+            bool setAsDefault,
+            CancellationToken cancellationToken = default)
+        {
+            if (setAsDefault)
+            {
+                var currentDefaultAddresses = await _context.DealerAddresses
+                    .Where(x =>
+                        x.DealerId == address.DealerId &&
+                        x.Id != address.Id &&
+                        x.IsDefault)
+                    .ToListAsync(cancellationToken);
+
+                foreach (var currentDefaultAddress in currentDefaultAddresses)
+                {
+                    currentDefaultAddress.RemoveDefault();
+                }
+            }
+
+            _context.DealerAddresses.Update(address);
+            await _context.SaveChangesAsync(cancellationToken);
+        }
+
         public async Task AddAsync(
             Dealer dealer,
             CancellationToken cancellationToken = default)

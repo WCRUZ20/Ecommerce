@@ -1,16 +1,19 @@
-﻿using System;
+﻿using DealerEcommerce.Domain.Users;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace DealerEcommerce.Application.Users.DTOs
+namespace DealerEcommerce.Application.Users.Commands
 {
-    public class UserDto
+    public class UpdateUserCommand
     {
-        public Guid Id { get; set; }
+        public Guid UserId { get; set; }
 
         public Guid? DealerId { get; set; }
 
-        public string Username { get; set; } = string.Empty;
+        public UserRole Role { get; set; }
+
+        public UserDealerType DealerType { get; set; } = UserDealerType.NoAplica;
 
         public string FirstName { get; set; } = string.Empty;
 
@@ -22,8 +25,6 @@ namespace DealerEcommerce.Application.Users.DTOs
 
         public string Email { get; set; } = string.Empty;
 
-        public string Role { get; set; } = string.Empty;
-
-        public string DealerType { get; set; } = string.Empty;
+        public string Username { get; set; } = string.Empty;
     }
 }

@@ -14,13 +14,16 @@ namespace DealerEcommerce.Api.Controllers
     public class UsersController : ControllerBase
     {
         private readonly ICommandHandler<CreateUserCommand, Result<UserDto>> _createUserHandler;
+        private readonly ICommandHandler<UpdateUserCommand, Result<UserDto>> _updateUserHandler;
         private readonly IUserRepository _userRepository;
 
         public UsersController(
             ICommandHandler<CreateUserCommand, Result<UserDto>> createUserHandler,
+            ICommandHandler<UpdateUserCommand, Result<UserDto>> updateUserHandler,
             IUserRepository userRepository)
         {
             _createUserHandler = createUserHandler;
+            _updateUserHandler = updateUserHandler;
             _userRepository = userRepository;
         }
 
@@ -68,6 +71,40 @@ namespace DealerEcommerce.Api.Controllers
             return Ok(Result<UserDto>.Success(MapToDto(user), "Usuario obtenido correctamente."));
         }
 
+        [HttpPut("{userId:guid}")]
+        public async Task<IActionResult> Update(
+            Guid userId,
+            [FromBody] UpdateUserCommand command,
+            CancellationToken cancellationToken)
+        {
+            var isAdminOrDev = IsAdminOrDev();
+            var currentUserId = GetCurrentUserId();
+
+            if (!isAdminOrDev && currentUserId != userId)
+                return Forbid();
+
+            var user = await _userRepository.GetByIdAsync(userId, cancellationToken);
+
+            if (user == null)
+                return NotFound(Result<UserDto>.Failure("No existe el usuario indicado."));
+
+            command.UserId = userId;
+
+            if (!isAdminOrDev)
+            {
+                command.DealerId = user.DealerId;
+                command.Role = user.Role;
+                command.DealerType = user.DealerType;
+            }
+
+            var result = await _updateUserHandler.HandleAsync(command, cancellationToken);
+
+            if (!result.IsSuccess)
+                return BadRequest(result);
+
+            return Ok(result);
+        }
+
         [HttpPost]
         [Authorize(Roles = $"{nameof(UserRole.Admin)},{nameof(UserRole.Dev)}")]
         public async Task<IActionResult> Create(
@@ -105,6 +142,10 @@ namespace DealerEcommerce.Api.Controllers
                 Id = user.Id,
                 DealerId = user.DealerId,
                 Username = user.Username,
+                FirstName = user.FirstName,
+                SecondName = user.SecondName,
+                LastName = user.LastName,
+                SecondLastName = user.SecondLastName,
                 Email = user.Email,
                 Role = ((int)user.Role).ToString(),
                 DealerType = ((int)user.DealerType).ToString()

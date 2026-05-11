@@ -45,6 +45,28 @@ namespace DealerEcommerce.Domain.Addresses
             IsDefault = isDefault;
         }
 
+        public void UpdateDetails(
+            Guid dealerId,
+            AddressType addressType,
+            string province,
+            string city,
+            string mainStreet,
+            string? secondaryStreet,
+            string? reference,
+            bool isDefault)
+        {
+            DealerId = dealerId;
+            AddressType = addressType;
+            Province = province;
+            City = city;
+            MainStreet = mainStreet;
+            SecondaryStreet = secondaryStreet;
+            Reference = reference;
+            IsDefault = isDefault;
+
+            MarkAsUpdated();
+        }
+
         public void SetAsDefault()
         {
             IsDefault = true;

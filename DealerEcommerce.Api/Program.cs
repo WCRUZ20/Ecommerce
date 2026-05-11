@@ -45,12 +45,24 @@ builder.Services.AddScoped<
     CreateUserHandler>();
 
 builder.Services.AddScoped<
+    ICommandHandler<UpdateUserCommand, Result<UserDto>>,
+    UpdateUserHandler>();
+
+builder.Services.AddScoped<
     ICommandHandler<CreateDealerCommand, Result<DealerDto>>,
     CreateDealerHandler>();
 
 builder.Services.AddScoped<
+    ICommandHandler<UpdateDealerCommand, Result<DealerDto>>,
+    UpdateDealerHandler>();
+
+builder.Services.AddScoped<
     ICommandHandler<AddDealerAddressCommand, Result<DealerAddressDto>>,
     AddDealerAddressHandler>();
+
+builder.Services.AddScoped<
+    ICommandHandler<UpdateDealerAddressCommand, Result<DealerAddressDto>>,
+    UpdateDealerAddressHandler>();
 
 var jwtSecretKey = builder.Configuration["Jwt:SecretKey"];
 
