@@ -40,7 +40,8 @@ namespace DealerEcommerce.Infrastructure.Security
                 new Claim("dealerId", user.DealerId?.ToString() ?? string.Empty),
                 new Claim("username", user.Username),
                 new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.Role, ((int)user.Role).ToString()),
+                new Claim(ClaimTypes.Role, user.Role.ToString()),
+                new Claim("roleId", ((int)user.Role).ToString()),
                 new Claim("dealerType", ((int)user.DealerType).ToString())
             };
 

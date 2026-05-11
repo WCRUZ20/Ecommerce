@@ -1,7 +1,3 @@
-using System.Text;
-using DealerEcommerce.Infrastructure;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
 using DealerEcommerce.Application.Abstractions;
 using DealerEcommerce.Application.Auth.Commands;
 using DealerEcommerce.Application.Auth.DTOs;
@@ -13,13 +9,30 @@ using DealerEcommerce.Application.Dealers.Handlers;
 using DealerEcommerce.Application.Users.Commands;
 using DealerEcommerce.Application.Users.DTOs;
 using DealerEcommerce.Application.Users.Handlers;
+using DealerEcommerce.Infrastructure;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        Scheme = "bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Description = "Ingrese el JWT retornado por el endpoint de login."
+    });
+});
 
 builder.Services.AddInfrastructure(builder.Configuration);
 
@@ -68,7 +81,12 @@ builder.Services
         };
     });
 
-builder.Services.AddAuthorization();
+builder.Services.AddAuthorization(options =>
+{
+    options.FallbackPolicy = new AuthorizationPolicyBuilder()
+        .RequireAuthenticatedUser()
+        .Build();
+});
 
 var app = builder.Build();
 

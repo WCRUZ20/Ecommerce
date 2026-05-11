@@ -2,6 +2,7 @@
 using DealerEcommerce.Application.Auth.Commands;
 using DealerEcommerce.Application.Auth.DTOs;
 using DealerEcommerce.Application.Common;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DealerEcommerce.Api.Controllers
@@ -19,6 +20,7 @@ namespace DealerEcommerce.Api.Controllers
         }
 
         [HttpPost("login")]
+        [AllowAnonymous]
         public async Task<IActionResult> Login(
             [FromBody] LoginCommand command,
             CancellationToken cancellationToken)

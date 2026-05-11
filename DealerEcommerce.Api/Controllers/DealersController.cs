@@ -2,6 +2,7 @@
 using DealerEcommerce.Application.Common;
 using DealerEcommerce.Application.Dealers.Commands;
 using DealerEcommerce.Application.Dealers.DTOs;
+using DealerEcommerce.Domain.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,7 +24,7 @@ namespace DealerEcommerce.Api.Controllers
         }
 
         [HttpPost]
-        [AllowAnonymous]
+        [Authorize(Roles = nameof(UserRole.Admin))]
         public async Task<IActionResult> Create(
             [FromBody] CreateDealerCommand command,
             CancellationToken cancellationToken)
