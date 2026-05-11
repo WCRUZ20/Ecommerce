@@ -125,6 +125,14 @@ namespace DealerEcommerce.Infrastructure.Repositories
             await _context.SaveChangesAsync(cancellationToken);
         }
 
+        public async Task DeleteAddressAsync(
+            DealerAddress address,
+            CancellationToken cancellationToken = default)
+        {
+            _context.DealerAddresses.Remove(address);
+            await _context.SaveChangesAsync(cancellationToken);
+        }
+
         public async Task AddAsync(
             Dealer dealer,
             CancellationToken cancellationToken = default)
@@ -142,6 +150,14 @@ namespace DealerEcommerce.Infrastructure.Repositories
                 _context.Dealers.Update(dealer);
             }
 
+            await _context.SaveChangesAsync(cancellationToken);
+        }
+
+        public async Task DeleteAsync(
+            Dealer dealer,
+            CancellationToken cancellationToken = default)
+        {
+            _context.Dealers.Remove(dealer);
             await _context.SaveChangesAsync(cancellationToken);
         }
     }

@@ -119,6 +119,30 @@ namespace DealerEcommerce.Api.Controllers
             return Ok(result);
         }
 
+        [HttpDelete("{userId:guid}")]
+        [Authorize(Roles = $"{nameof(UserRole.Admin)},{nameof(UserRole.Dev)}")]
+        public async Task<IActionResult> Delete(
+            Guid userId,
+            CancellationToken cancellationToken)
+        {
+            var currentUserId = GetCurrentUserId();
+
+            if (!currentUserId.HasValue)
+                return Forbid();
+
+            if (currentUserId.Value == userId)
+                return BadRequest(Result<Guid>.Failure("No puedes eliminar tu propio usuario."));
+
+            var user = await _userRepository.GetByIdAsync(userId, cancellationToken);
+
+            if (user == null)
+                return NotFound(Result<Guid>.Failure("No existe el usuario indicado."));
+
+            await _userRepository.DeleteAsync(user, cancellationToken);
+
+            return Ok(Result<Guid>.Success(userId, "Usuario eliminado correctamente."));
+        }
+
         private bool IsAdminOrDev()
         {
             return User.IsInRole(nameof(UserRole.Admin)) || User.IsInRole(nameof(UserRole.Dev));
