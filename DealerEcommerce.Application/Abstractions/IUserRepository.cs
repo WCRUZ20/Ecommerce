@@ -29,5 +29,9 @@ namespace DealerEcommerce.Application.Abstractions
         Task UpdateAsync(
             User user,
             CancellationToken cancellationToken = default);
+
+        Task DeleteAsync(
+            User user,
+            CancellationToken cancellationToken = default);
     }
 }

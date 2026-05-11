@@ -67,5 +67,13 @@ namespace DealerEcommerce.Infrastructure.Repositories
             _context.Users.Update(user);
             await _context.SaveChangesAsync(cancellationToken);
         }
+
+        public async Task DeleteAsync(
+            User user,
+            CancellationToken cancellationToken = default)
+        {
+            _context.Users.Remove(user);
+            await _context.SaveChangesAsync(cancellationToken);
+        }
     }
 }

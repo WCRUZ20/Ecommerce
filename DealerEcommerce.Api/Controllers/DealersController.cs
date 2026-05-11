@@ -240,6 +240,40 @@ namespace DealerEcommerce.Api.Controllers
             return Ok(result);
         }
 
+        [HttpDelete("{dealerId:guid}")]
+        [Authorize(Roles = $"{nameof(UserRole.Admin)},{nameof(UserRole.Dev)}")]
+        public async Task<IActionResult> Delete(
+            Guid dealerId,
+            CancellationToken cancellationToken)
+        {
+            var dealer = await _dealerRepository.GetByIdAsync(dealerId, cancellationToken);
+
+            if (dealer == null)
+                return NotFound(Result<Guid>.Failure("No existe el dealer indicado."));
+
+            await _dealerRepository.DeleteAsync(dealer, cancellationToken);
+
+            return Ok(Result<Guid>.Success(dealerId, "Dealer eliminado correctamente."));
+        }
+
+        [HttpDelete("addresses/{addressId:guid}")]
+        public async Task<IActionResult> DeleteAddress(
+            Guid addressId,
+            CancellationToken cancellationToken)
+        {
+            var address = await _dealerRepository.GetAddressByIdAsync(addressId, cancellationToken);
+
+            if (address == null)
+                return NotFound(Result<Guid>.Failure("No existe la dirección indicada."));
+
+            if (!IsAdminOrDev() && GetCurrentDealerId() != address.DealerId)
+                return Forbid();
+
+            await _dealerRepository.DeleteAddressAsync(address, cancellationToken);
+
+            return Ok(Result<Guid>.Success(addressId, "Dirección eliminada correctamente."));
+        }
+
         private bool IsAdminOrDev()
         {
             return User.IsInRole(nameof(UserRole.Admin)) || User.IsInRole(nameof(UserRole.Dev));
